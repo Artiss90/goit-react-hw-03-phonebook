@@ -5,8 +5,11 @@ import Form from './Components/Form/Form';
 import ContactList from './Components/ContactList/ContactList';
 import FilterName from './Components/FilterName/FilterName';
 import style from './App.module.css';
+import classNames from 'classnames/bind';
 
 /* eslint react/prop-types: 1 */
+
+let mixStyle = classNames.bind(style);
 
 class App extends Component {
   state = {
@@ -18,6 +21,38 @@ class App extends Component {
     ],
     filter: '',
   };
+
+  componentDidMount() {
+    console.log('App componentDidMount');
+    /** */
+
+    const listContacts = localStorage.getItem('listContacts');
+    const parsedListContacts = JSON.parse(listContacts);
+
+    if (parsedListContacts) {
+      this.setState({ contacts: parsedListContacts });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log('App componentDidUpdate');
+    /** */
+
+    const nextContacts = this.state.contacts;
+    const prevContacts = prevState.contacts;
+
+    if (nextContacts !== prevContacts) {
+      /** */
+      console.log(
+        'Обновился список контактов, записываю список контактов в хранилище',
+      );
+      localStorage.setItem('listContacts', JSON.stringify(nextContacts));
+    }
+
+    // if (nextContacts.length > prevContacts.length && prevContacts.length !== 0) {
+    //   this.toggleModal();
+    // }
+  }
 
   addContact = ({ name, number }) => {
     console.log({ name, number });
@@ -65,10 +100,10 @@ class App extends Component {
     console.log(style);
     return (
       <>
-        <h2 className={style.title}>Phonebook</h2>
+        <h2 className={mixStyle('title')}>Phonebook</h2>
         <Form onSubmitForm={this.addContact}></Form>
         <FilterName value={this.state.filter} onChange={this.changeFilter} />
-        <h2 className={style.title + ' ' + style.center}>Contacts</h2>
+        <h2 className={mixStyle('title', 'center')}>Contacts</h2>
         <ContactList
           contacts={this.getVisibleContacts()}
           onClickDelete={this.onDeleteContact}
