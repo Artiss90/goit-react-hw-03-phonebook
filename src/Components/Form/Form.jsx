@@ -18,7 +18,7 @@ export default class Form extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { name, number } = this.state;
-    console.log(name, number);
+    // console.log(name, number);
     if (name && number) {
       this.props.onSubmitForm(this.state);
     }

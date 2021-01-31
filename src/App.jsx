@@ -24,7 +24,7 @@ class App extends Component {
 
   componentDidMount() {
     console.log('App componentDidMount');
-    /** */
+    // TODO: 'При загрузке приложения, контакты, если таковые есть, считываются из локального хранилища и записываются в состояние'
 
     const listContacts = localStorage.getItem('listContacts');
     const parsedListContacts = JSON.parse(listContacts);
@@ -35,17 +35,16 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('App componentDidUpdate');
-    /** */
+    // console.log('App componentDidUpdate');
+    // TODO: 'При добавлении и удалении контакта, контакты сохраняются в локальное хранилище'
 
     const nextContacts = this.state.contacts;
     const prevContacts = prevState.contacts;
 
     if (nextContacts !== prevContacts) {
-      /** */
-      console.log(
-        'Обновился список контактов, записываю список контактов в хранилище',
-      );
+      // console.log(
+      //   'Обновился список контактов, записываю список контактов в хранилище',
+      // );
       localStorage.setItem('listContacts', JSON.stringify(nextContacts));
     }
 
